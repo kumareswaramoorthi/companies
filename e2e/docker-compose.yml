@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+
+  web:
+    build: ../
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: postgres
+  
+  flyway:
+    image: flyway/flyway:latest
+    depends_on:
+      - postgres
+    command: -url=jdbc:postgresql://postgres:5432/postgres -user=postgres -password=password migrate
+    volumes:
+      - ../db-migration:/flyway/sql
+

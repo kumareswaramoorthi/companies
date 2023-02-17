@@ -1,0 +1,172 @@
+definitions:
+  errors.ErrorResponse:
+    properties:
+      error_code:
+        type: string
+      error_message:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.Company:
+    properties:
+      amount_of_employees:
+        type: integer
+      ceated_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      registered:
+        type: boolean
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/company:
+    post:
+      consumes:
+      - application/json
+      description: creation of new company
+      parameters:
+      - description: request body
+        in: body
+        name: CreateCompany
+        required: true
+        schema:
+          $ref: '#/definitions/models.Company'
+      - default: authorization
+        description: string
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Company'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      summary: create company
+      tags:
+      - Company
+  /api/v1/company/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete company by ID
+      parameters:
+      - default: authorization
+        description: string
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      summary: delete a company
+      tags:
+      - Company
+    get:
+      consumes:
+      - application/json
+      description: get company info by ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Company'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      summary: get company
+      tags:
+      - Company
+    patch:
+      consumes:
+      - application/json
+      description: update company by ID
+      parameters:
+      - description: request body
+        in: body
+        name: updateReq
+        required: true
+        schema:
+          $ref: '#/definitions/models.Company'
+      - default: authorization
+        description: string
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Company'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      summary: update a company
+      tags:
+      - Company
+swagger: "2.0"
